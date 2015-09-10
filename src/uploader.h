@@ -16,23 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <curl/curl.h>
 #include "global.h"
-#include <X11/extensions/shape.h>
-#include <gdk/gdkx.h>
-#include <unistd.h>
-#include <X11/Xlib.h>
 
-GdkPixbuf *
-takeScreenshot();
+char *
+upload (gchar * path);
 
-static GdkPixbuf *
-get_window_screenshot (GdkWindow * window,
-		       gboolean border);
+static size_t
+getResponse(void * data, size_t size, size_t nmemb, void * dest);
 
-static Window
-find_wm_window (Window xid);
-
-static GdkWindow *
-get_active_window (GdkScreen * screen,
-		   gboolean * needs_unref,
-		   gboolean * border);
