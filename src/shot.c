@@ -3,20 +3,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <cairo.h>
 
-XImage *
+void
 getScreenshot(int x, int y, int w, int h)
 {
     Display * screen;
-    XImage * shot;
+    cairo_surface_t * surface;
+    Window * window = RootWindow(screen, DefaultScreen(screen));
+    XWindowAttributes * windowData;
 
-    screen = XOpenDisplay(NULL);
+
+    screen = XOpenDisplay (NULL);
     assert(screen);
 
-    shot = XGetImage(screen,
-                     RootWindow(dpl, DefaultScreen(dpl)),
-                     x, y, w, h,
-                     AllPlanes,
-                     ZPixmap);
+    XGetWindowAttributes (screen,
+                          window,
+                          windowData);
+
+    surface = cairo_xlib_surface_create (screen,
+                                         win,
+                                         TrueColor,
+                                         winData.width,
+                                         winData.height);
+
+    cairo_surface_write_to_png (surface,
+                                "/tmp/test.png");
 
 }//getScreenshot
